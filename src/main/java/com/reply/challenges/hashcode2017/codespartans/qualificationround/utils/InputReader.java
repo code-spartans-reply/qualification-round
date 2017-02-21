@@ -1,4 +1,4 @@
-package eu.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
+package com.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,7 +6,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
+
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 

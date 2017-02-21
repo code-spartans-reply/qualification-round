@@ -1,4 +1,4 @@
-package eu.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
+package com.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
 
 import java.io.InputStreamReader;
 

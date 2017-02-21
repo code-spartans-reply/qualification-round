@@ -1,4 +1,4 @@
-package eu.reply.challenges.hashcode2017.codespartans.qualificationround;
+package com.reply.challenges.hashcode2017.codespartans.qualificationround;
 
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
@@ -8,11 +8,11 @@ import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.utils.InputReader;
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.utils.OutputRenderer;
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.utils.SolutionEngine;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.InputReader;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.OutputRenderer;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.SolutionEngine;
 
 public final class Main {
 

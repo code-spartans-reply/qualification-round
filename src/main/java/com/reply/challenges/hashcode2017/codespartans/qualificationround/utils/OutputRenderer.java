@@ -1,4 +1,4 @@
-package eu.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
+package com.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 
 import com.google.common.io.Files;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
 
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
-import eu.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
