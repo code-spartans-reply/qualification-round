@@ -32,7 +32,8 @@ public final class JavaScriptEngine {
 		}
 	}
 
-	final Object call(final String functionName, Object... parameters) throws NoSuchMethodException, ScriptException {
-		return jsEngine.invokeFunction(functionName, parameters);
+	@SuppressWarnings("unchecked")
+	public static final <T> T call(final String functionName, Object... parameters) throws NoSuchMethodException, ScriptException {
+		return (T) jsEngine.invokeFunction(functionName, parameters);
 	}
 }
