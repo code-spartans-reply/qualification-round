@@ -91,7 +91,8 @@ public class InputReader {
 			}
 			
 			problemParameters = new ProblemParameters(videosNum,endpointsNum,requestsNum,cachesNum,cachesCapacity,videos,endpoints,requests);
-			log.info("Parameters read: {}", problemParameters);
+			log.info("Parameters read");
+			log.trace("{}",problemParameters);
 		}
 
 		return problemParameters;
