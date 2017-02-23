@@ -25,10 +25,14 @@ public class SolutionEngine {
 		
 		int cacheServersNumber = parameters.getCacheServersNumber();
 		int cacheCapacityInMb = parameters.getCacheCapacityInMb();
+	
+		Map<Integer,Cache> cacheMap = new HashMap<>();
 		
 		List<Cache> caches = new ArrayList<>(cacheServersNumber);
 		for (int id = 0; id<cacheServersNumber; id ++) {
-			caches.add(new Cache(id, cacheCapacityInMb));
+			Cache cache = new Cache(id, cacheCapacityInMb);
+			caches.add(cache);
+			cacheMap.put(id, cache);
 		}
 		
 		List<Endpoint> endpoints = Ranker.rankEndpoints(parameters); 
@@ -38,37 +42,51 @@ public class SolutionEngine {
 		Iterator<Cache> cacheIterator = caches.iterator();
 		
 		Map<Integer,Endpoint> endpointMap = new HashMap<>();
-		Map<Integer,Request> requestMap = new HashMap<>();
+		Map<String,Long> requestsMap = new HashMap<>();
 		Map<Integer,Video> videoMap = new HashMap<>();
 		
 		for (Endpoint endpoint : endpoints) {
 			endpointMap.put(endpoint.getId(), endpoint);
 		}
-/*
+
 		for (Request request: requests) {
-			requestMap.put(request.getId(), request);
+			String key = request.getRequestedVideo()+"-"+request.getEndpointId();
+			Long videoRequest = requestsMap.get(key);
+			if (videoRequest == null) {
+				requestsMap.put(key, request.getTimes());
+			} else {
+				log.info("Found same request for {}", key);
+				requestsMap.put(key, videoRequest + request.getTimes());
+			}
 		}
-*/
+
 		for (Video video: videos) {
 			videoMap.put(video.getId(), video);
 		}
 		
 		log.info("Videos: {}, requests: {}, endpoints: {}, caches: {}", new Object[]{videos.size(), requests.size(), endpoints.size(), caches.size()});
 		
-		while(cacheIterator.hasNext()) {
-			Cache cache = cacheIterator.next();
-			log.debug("Processing cache {}",cache.getId());
-			Iterator<Video> vidIterator = videos.iterator(); 
-			while (vidIterator.hasNext()) {
-				Video video = vidIterator.next();
-				if (cache.addCachedVideo(video))  {
-					log.debug("Added video {}",video.getId());
-					vidIterator.remove();
+		Iterator<Video> vidIterator = videos.iterator();
+		
+		while(vidIterator.hasNext()) {
+			Video video = vidIterator.next();
+			Iterator<Endpoint> epIterator = endpoints.iterator();
+			while(epIterator.hasNext()) {
+				Endpoint ep = epIterator.next();
+				int[] cacheLatencies = ep.getCacheLatencies();
+				for(int i = 0; i < cacheLatencies.length; i++) {
+					//calculateTotalTime(cacheLatencies[i],);
 				}
-			};
+			}
+
+			
 		}
 		
 		return new Solution(caches.toArray(new Cache[0]));
+	}
+	
+	static long calculateTotalTime(long latency, long numberOfRequests) {
+		return latency*numberOfRequests;
 	}
 
 }
