@@ -83,7 +83,7 @@ public class InputReader {
 				final int requestsCardinality = inputData.nextInt();
 				
 				if (connectedEndpointsIds.contains(endpointId)) {
-					requests.add(new Request(requestedVideoId, requestsCardinality));
+					requests.add(new Request(requestedVideoId, endpointId, requestsCardinality));
 					log.trace("Request {} collected", i);
  				} else {
  					log.warn("Request {} discarded since it comes from a disconnected endpoint", i);

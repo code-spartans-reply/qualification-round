@@ -7,5 +7,7 @@ public class Request {
 
 	private final int requestedVideo;
 	
+	private final int endpointId;
+	
 	private final long times;
 }
