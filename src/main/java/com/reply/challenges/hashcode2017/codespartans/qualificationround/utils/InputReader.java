@@ -59,6 +59,7 @@ public class InputReader {
 						cacheCounter = cacheId;
 						cachesLatencies[cacheCounter] = cacheLatency;
 						log.trace("Endpoint {}, cache[{}] latency = {}", i, cacheCounter, cachesLatencies[cacheCounter]);
+						++cacheCounter;
 					}
 					for (; cacheCounter < cachesNum; ++cacheCounter) {
 						cachesLatencies[cacheCounter] = Integer.MAX_VALUE;
