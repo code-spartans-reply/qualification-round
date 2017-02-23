@@ -7,5 +7,5 @@ public class Video {
 
 	private final int id;
 	
-	private final long size;
+	private final int size;
 }
