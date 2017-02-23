@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SolutionEngine {
 	
 	public static Solution processSolution(ProblemParameters parameters) {
-		log.info("Start looking for a solution to problem {}", parameters);
+		log.info("Start looking for a solution to problem");
 		
 		int cacheServersNumber = parameters.getCacheServersNumber();
 		int cacheCapacityInMb = parameters.getCacheCapacityInMb();
@@ -31,17 +31,20 @@ public class SolutionEngine {
 		
 		List<Endpoint> endpoints = parameters.getEndpoints(); 
 		List<Request> requests = parameters.getRequests(); 
-		List<Video> videos = parameters.getVideos(); 
+		List<Video> videos = Ranker.rankVideos(parameters); 
 		
-		Iterator<Video> vidIterator = videos.iterator();
 		Iterator<Cache> cacheIterator = caches.iterator();
+		
+		log.info("Videos: {}, requests: {}, endpoints: {}, caches: {}", new Object[]{videos.size(), requests.size(), endpoints.size(), caches.size()});
 		
 		while(cacheIterator.hasNext()) {
 			Cache cache = cacheIterator.next();
-			
+			log.debug("Processing cache {}",cache.getId());
+			Iterator<Video> vidIterator = videos.iterator(); 
 			while (vidIterator.hasNext()) {
 				Video video = vidIterator.next();
-				if (cache.addCachedVideo(video)) {
+				if (cache.addCachedVideo(video))  {
+					log.debug("Added video {}",video.getId());
 					vidIterator.remove();
 				}
 			};
