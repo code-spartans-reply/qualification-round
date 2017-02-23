@@ -79,4 +79,5 @@ public class Ranker {
 		return parameters.getEndpoints();
 	}
 
+
 }
