@@ -37,7 +37,7 @@ public class SolutionEngine {
 		
 		List<Endpoint> endpoints = Ranker.rankEndpoints(parameters); 
 		List<Request> requests = parameters.getRequests(); 
-		List<Video> videos = Ranker.rankVideos(parameters); 
+		List<Video> videos = Ranker.rankVideos(parameters.videos(), parameters.requests()); 
 		
 		Iterator<Cache> cacheIterator = caches.iterator();
 		
