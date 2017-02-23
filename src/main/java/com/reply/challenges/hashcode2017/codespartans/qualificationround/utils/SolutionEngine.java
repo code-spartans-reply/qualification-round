@@ -1,8 +1,10 @@
 package com.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Cache;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Endpoint;
@@ -29,11 +31,27 @@ public class SolutionEngine {
 			caches.add(new Cache(id, cacheCapacityInMb));
 		}
 		
-		List<Endpoint> endpoints = parameters.getEndpoints(); 
+		List<Endpoint> endpoints = Ranker.rankEndpoints(parameters); 
 		List<Request> requests = parameters.getRequests(); 
 		List<Video> videos = Ranker.rankVideos(parameters); 
 		
 		Iterator<Cache> cacheIterator = caches.iterator();
+		
+		Map<Integer,Endpoint> endpointMap = new HashMap<>();
+		Map<Integer,Request> requestMap = new HashMap<>();
+		Map<Integer,Video> videoMap = new HashMap<>();
+		
+		for (Endpoint endpoint : endpoints) {
+			endpointMap.put(endpoint.getId(), endpoint);
+		}
+/*
+		for (Request request: requests) {
+			requestMap.put(request.getId(), request);
+		}
+*/
+		for (Video video: videos) {
+			videoMap.put(video.getId(), video);
+		}
 		
 		log.info("Videos: {}, requests: {}, endpoints: {}, caches: {}", new Object[]{videos.size(), requests.size(), endpoints.size(), caches.size()});
 		
