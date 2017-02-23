@@ -45,7 +45,7 @@ public class InputReader {
 				}
 			}
 
-			problemParameters = new ProblemParameters(/* ... */);
+//			problemParameters = new ProblemParameters(/* ... */);
 			log.info("Parameters read: {}", problemParameters);
 		}
 
