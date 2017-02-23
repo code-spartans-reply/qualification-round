@@ -12,15 +12,23 @@ public class Cache {
 	
 	private final int size;
 	
+	private int residualSize;
+	
 	private final List<Video> cachedVideos;
 	
 	public Cache(int id, int size) {
 		this.id = id;
 		this.size = size;
+		this.residualSize = size;
 		this.cachedVideos  = new ArrayList<Video>();
 	}
 	
-	public void addCachedVideo(Video video) {
+	public boolean addCachedVideo(Video video) {
+		if (video.getSize() > residualSize) {
+			return false;
+		}
 		cachedVideos.add(video);
+		residualSize -= video.getSize();
+		return true;
 	}
 }
