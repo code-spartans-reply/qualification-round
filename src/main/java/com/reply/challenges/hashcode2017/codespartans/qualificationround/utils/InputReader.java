@@ -2,7 +2,6 @@ package com.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +10,7 @@ import java.util.stream.Collectors;
 
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Endpoint;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Request;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Video;
 
 import lombok.experimental.UtilityClass;
@@ -74,13 +74,22 @@ public class InputReader {
 
 			final Set<Integer> connectedEndpointsIds = endpoints.stream().map(Endpoint::getId)
 					.collect(Collectors.toSet());
+			final List<Request> requests = new LinkedList<>();
 			log.info("Reading requests");
 			for (int i = 0; i < requestsNum; ++i) {
 				final int requestedVideoId = inputData.nextInt();
 				final int endpointId = inputData.nextInt();
+				final int requestsCardinality = inputData.nextInt();
+				
+				if (connectedEndpointsIds.contains(endpointId)) {
+					requests.add(new Request(requestedVideoId, requestsCardinality));
+					log.trace("Request {} collected", i);
+ 				} else {
+ 					log.warn("Request {} discarded since it comes from a disconnected endpoint", i);
+ 				}
 			}
 			
-			// problemParameters = new ProblemParameters(/* ... */);
+			problemParameters = new ProblemParameters(videosNum,endpointsNum,requestsNum,cachesNum,cachesCapacity,videos,endpoints,requests);
 			log.info("Parameters read: {}", problemParameters);
 		}
 
