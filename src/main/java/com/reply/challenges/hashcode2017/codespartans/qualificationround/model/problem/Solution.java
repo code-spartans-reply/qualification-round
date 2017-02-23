@@ -4,5 +4,6 @@ import lombok.Value;
 
 @Value
 public class Solution {
-
+	private final Cache[] caches;
+	
 }
