@@ -43,6 +43,7 @@ public class OutputRenderer {
 						writer.print(" ");
 					}
 				}
+				writer.println();
 			}
 			
 			// TODO writer.print(result.data)

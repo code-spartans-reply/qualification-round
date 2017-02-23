@@ -28,7 +28,7 @@ public class Cache {
 			return false;
 		}
 		cachedVideos.add(video);
-		residualSize -= video.getSize();
+		residualSize = residualSize - video.getSize();
 		return true;
 	}
 }

@@ -9,12 +9,7 @@
 		</layout>
 	</appender>
 
-	<logger name="com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.InputReader" level="info"
-		additivity="false">
-		<appender-ref ref="STDOUT" />
-	</logger>
-
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="STDOUT" />
 	</root>
 
