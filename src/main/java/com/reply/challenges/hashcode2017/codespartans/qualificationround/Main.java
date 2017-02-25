@@ -8,11 +8,11 @@ import java.nio.file.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.algos.PutVideosAsTheyCome;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.InputReader;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.OutputRenderer;
-import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.SolutionEngine;
 
 public final class Main {
 
@@ -34,7 +34,7 @@ public final class Main {
 
 			final ProblemParameters parameters = InputReader.readInputParametersFrom(inputFile);
 
-			final Solution result = SolutionEngine.processSolution(parameters);
+			final Solution result = new PutVideosAsTheyCome().processSolution(parameters);
 
 			OutputRenderer.renderOutput(result, parameters, outputFile);
 		}
