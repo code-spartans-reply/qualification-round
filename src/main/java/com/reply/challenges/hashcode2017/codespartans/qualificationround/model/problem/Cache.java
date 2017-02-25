@@ -35,7 +35,7 @@ public class Cache {
 		return true;
 	}
 	
-	public double fillableFactor() {
-		return size/residualSize;
+	public double freeSpaceFactor() {
+		return residualSize/size;
 	}
 }
