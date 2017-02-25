@@ -24,11 +24,18 @@ public class Cache {
 	}
 	
 	public boolean addCachedVideo(Video video) {
+		if(cachedVideos.contains(video)) {
+			return false;
+		}
 		if (video.getSize() > residualSize) {
 			return false;
 		}
 		cachedVideos.add(video);
 		residualSize = residualSize - video.getSize();
 		return true;
+	}
+	
+	public double fillableFactor() {
+		return size/residualSize;
 	}
 }
