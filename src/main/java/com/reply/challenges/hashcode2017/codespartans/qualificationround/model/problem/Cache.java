@@ -16,11 +16,18 @@ public class Cache {
 	
 	private final List<Video> cachedVideos;
 	
+	private int latency;
+	
 	public Cache(int id, int size) {
 		this.id = id;
 		this.size = size;
 		this.residualSize = size;
 		this.cachedVideos  = new ArrayList<Video>();
+	}
+	
+	public Cache(int id, int size, int latency) {
+		this(id,size);
+		this.latency = latency;
 	}
 	
 	public boolean addCachedVideo(Video video) {
