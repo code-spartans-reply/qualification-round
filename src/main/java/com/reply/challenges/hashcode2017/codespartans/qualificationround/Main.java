@@ -5,18 +5,17 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.reply.challenges.hashcode2017.codespartans.qualificationround.algos.PutVideosAsTheyCome;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.algos.JustByRankingVideos;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.ProblemParameters;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.InputReader;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.OutputRenderer;
+import com.reply.challenges.hashcode2017.codespartans.qualificationround.utils.SolutionEngine;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public final class Main {
-
-	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) throws Exception {
 		if (args.length != 2) {
@@ -34,9 +33,11 @@ public final class Main {
 
 			final ProblemParameters parameters = InputReader.readInputParametersFrom(inputFile);
 
-			final Solution result = new PutVideosAsTheyCome().processSolution(parameters);
+			final Solution solution = new JustByRankingVideos().processSolution(parameters);
 
-			OutputRenderer.renderOutput(result, parameters, outputFile);
+			long score = SolutionEngine.calculateScore(parameters, solution);
+			log.info("Score for {} is {}",inputFile.getFileName(),score);
+			OutputRenderer.renderOutput(solution, parameters, outputFile);
 		}
 	}
 
