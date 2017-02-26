@@ -41,12 +41,16 @@ public class InputReader {
 
 			log.info("Reading endpoint data");
 			final List<Endpoint> endpoints = new LinkedList<>();
+			final List<Endpoint> allEndpoints = new LinkedList<>();
 			for (int i = 0; i < endpointsNum; ++i) {
 				final int datacenterLatency = inputData.nextInt();
 				final int connectedCachesNumber = inputData.nextInt();
 
+				
+				final int[] cachesLatencies = new int[cachesNum];
+				allEndpoints.add(new Endpoint(i, datacenterLatency, cachesLatencies));
+
 				if (cachesNum > 0) {
-					final int[] cachesLatencies = new int[cachesNum];
 					int cacheCounter = 0;
 					for (int j = 0; j < connectedCachesNumber; ++j) {
 						final int cacheId = inputData.nextInt();
@@ -76,11 +80,14 @@ public class InputReader {
 			final Set<Integer> connectedEndpointsIds = endpoints.stream().map(Endpoint::getId)
 					.collect(Collectors.toSet());
 			final List<Request> requests = new LinkedList<>();
+			final List<Request> allRequests = new LinkedList<>();
 			log.info("Reading requests");
 			for (int i = 0; i < requestsNum; ++i) {
 				final int requestedVideoId = inputData.nextInt();
 				final int endpointId = inputData.nextInt();
 				final int requestsCardinality = inputData.nextInt();
+				
+				allRequests.add(new Request(requestedVideoId, endpointId, requestsCardinality));
 				
 				if (connectedEndpointsIds.contains(endpointId)) {
 					requests.add(new Request(requestedVideoId, endpointId, requestsCardinality));
@@ -90,7 +97,7 @@ public class InputReader {
  				}
 			}
 			
-			problemParameters = new ProblemParameters(videosNum,endpointsNum,requestsNum,cachesNum,cachesCapacity,videos,endpoints,requests);
+			problemParameters = new ProblemParameters(videosNum,endpointsNum,requestsNum,cachesNum,cachesCapacity,videos,endpoints,requests,allEndpoints, allRequests);
 			log.info("Parameters read");
 			log.trace("{}",problemParameters);
 		}

@@ -24,6 +24,11 @@ public class ProblemParameters {
 	
 	private final List<Request> requests;
 	
+	private final List<Endpoint> allEndpoints;
+	
+	private final List<Request> allRequests;
+	
+	
 	public Stream<Video> videos() {
 		return videos.stream();
 	}
