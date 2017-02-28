@@ -9,7 +9,7 @@
 		</layout>
 	</appender>
 
-	<logger name="com.reply.challenges.hashcode2017.codespartans" level="debug" additivity="false">
+	<logger name="com.reply.challenges.hashcode2017.codespartans" level="info" additivity="false">
 		<appender-ref ref="STDOUT" />
 	</logger>
 	
