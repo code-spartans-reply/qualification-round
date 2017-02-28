@@ -128,6 +128,13 @@ public abstract class SolutionEngine {
 		
 		long score = (long) ((double)totalSavedTime/(double)totalRequests * 1000d);
 		log.info("Score {}",score);
+		
+		/** JustByRankingVIdeos should produce:
+		 * Kittens: 				623579
+		 * Me at the zoo: 			135833
+		 * Trending Today: 			499991
+		 * Videos worth spreading: 	 38844
+		 */
 		return score;
 	};
 
