@@ -1,5 +1,6 @@
 package com.reply.challenges.hashcode2017.codespartans.qualificationround.utils;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,6 +18,9 @@ import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.p
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Solution;
 import com.reply.challenges.hashcode2017.codespartans.qualificationround.model.problem.Video;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class SolutionEngine {
 
 	public abstract Solution processSolution(ProblemParameters parameters);
@@ -39,7 +43,6 @@ public abstract class SolutionEngine {
 		if (o != null) {
 			throw new RuntimeException(exceptionMessage);
 		}
-
 	}
 
 	protected static long createKey(int id1, int id2) {
@@ -67,26 +70,27 @@ public abstract class SolutionEngine {
 		}
 		
 		List<Request> requests = parameters.getAllRequests();
-		Map<Integer,Set<Request>> requestsByEpMap = new HashMap<>();
+		Map<Integer,List<Request>> requestsByEpMap = new HashMap<>();
 		//Requests by endPoint
 		for (Request request : requests) {
-			Set<Request> epReqSet = requestsByEpMap.get(request.getEndpointId());
+			List<Request> epReqSet = requestsByEpMap.get(request.getEndpointId());
 			if (epReqSet == null) {
-				epReqSet = new HashSet<>();
+				epReqSet = new ArrayList<>();
 				requestsByEpMap.put(request.getEndpointId(),epReqSet);
 			}
 			epReqSet.add(request);
 		}
 		
+		long countedRequests = 0;
 		List<Endpoint> endpoints = parameters.getAllEndpoints(); 
 		for (Endpoint ep : endpoints) {
-			Set<Request> epRequestSet = requestsByEpMap.get(ep.getId());
+			List<Request> epRequestSet = requestsByEpMap.get(ep.getId());
 			int[] cacheLatencies = ep.getCacheLatencies();
 			
 			TreeSet<Cache> epCachesByLatency = new TreeSet<>(new Comparator<Cache>() {
 				@Override
 				public int compare(Cache c1, Cache c2) {
-					return c2.getLatency() - c1.getLatency();
+					return c1.getLatency() - c2.getLatency();
 				}
 			});
 			
@@ -94,19 +98,22 @@ public abstract class SolutionEngine {
 				int latency = cacheLatencies[cacheId];
 				if (latency < ep.getDatacenterLatency()) {
 					epCachesByLatency.add(new Cache(cacheId,0,latency));
-				}
+				} 
 			}
 
 			for (Iterator<Request> iterator = epRequestSet.iterator(); iterator.hasNext();) {
 				Request request = iterator.next();
 				if (request.getEndpointId() == ep.getId()) {
+					countedRequests++;
 					int requestedVideo = request.getRequestedVideo();
-					//Look for video in one connected cache
+					//Look for video in one connected cache, by latency
 					totalRequests = totalRequests + request.getTimes();
 					for (Cache connectedCache : epCachesByLatency) {
 						Set<Integer> cachedVideos = videosInCacheMap.get(connectedCache.getId());
 						if (cachedVideos != null && cachedVideos.contains(requestedVideo)) {
-							totalSavedTime = totalSavedTime + (request.getTimes()*(ep.getDatacenterLatency()-connectedCache.getLatency()));
+							totalSavedTime = totalSavedTime + 
+									(request.getTimes()*((long)ep.getDatacenterLatency()-(long)connectedCache.getLatency()));
+							//If found once, it is the fastest cache for sure since it is sorted
 							break;
 						}
 					}
@@ -115,7 +122,13 @@ public abstract class SolutionEngine {
 			
 		}
 		
-		return (long) ((double)totalSavedTime/(double)totalRequests * 1000d);
+		log.info("caches: {}, countedRequests: {}, countedEndpoints: {}",
+				new Object[] { videosInCacheMap.size(), countedRequests, endpoints.size() });
+
+		
+		long score = (long) ((double)totalSavedTime/(double)totalRequests * 1000d);
+		log.info("Score {}",score);
+		return score;
 	};
 
 }
